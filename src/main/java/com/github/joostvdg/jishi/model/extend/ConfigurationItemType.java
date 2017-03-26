@@ -1,4 +1,4 @@
-package com.github.joostvdg.jishi.model;
+package com.github.joostvdg.jishi.model.extend;
 
 public enum ConfigurationItemType {
     SYSTEM,
