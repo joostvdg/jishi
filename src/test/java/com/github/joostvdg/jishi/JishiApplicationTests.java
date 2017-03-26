@@ -1,4 +1,4 @@
-package com.github.joostvdg;
+package com.github.joostvdg.jishi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

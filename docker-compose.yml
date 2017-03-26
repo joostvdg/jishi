@@ -1,0 +1,14 @@
+version: '2'
+services:
+  db:
+    image: mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=DTj4OatAgs0PX33mx7Pz
+      - MYSQL_DATABASE=jishi
+      - MYSQL_USER=jishi
+      - MYSQL_PASSWORD=5bZnNBnlo69xTirkGQjb
+

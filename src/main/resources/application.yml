@@ -1,0 +1,19 @@
+liquibase:
+  change-log: "classpath:liquibase-changeLog.xml"
+
+spring:
+  jackson:
+    serialization:
+      indent_output: true
+      write_dates_as_timestamps: false
+  jpa:
+      database: MYSQL
+      hibernate:
+          ddl-auto: validate
+          naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+          dialect: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+      url: jdbc:mysql://172.17.0.2/jishi
+      username: jishi
+      password: 5bZnNBnlo69xTirkGQjb
+      driver-class-name: com.mysql.jdbc.Driver
