@@ -1,5 +1,7 @@
 package com.github.joostvdg.jishi.model;
 
+import com.github.joostvdg.jishi.model.extend.ConfigurationItemType;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
