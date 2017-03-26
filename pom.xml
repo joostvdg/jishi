@@ -80,7 +80,7 @@
             <version>4.1.1</version>
         </dependency>
 
-        <!-- JACKSON -->
+        <!-- JACKSON
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
@@ -91,6 +91,7 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.datatypes.version}</version>
         </dependency>
+        -->
 
         <!-- SWAGGER -->
         <dependency>
@@ -116,6 +117,16 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-staticdocs</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-data-rest</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
             <version>${springfox.version}</version>
         </dependency>
 
