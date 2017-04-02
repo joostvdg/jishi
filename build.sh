@@ -3,6 +3,9 @@
 DOWN_DEFAULT=0
 DOWN="${1:-$DOWN_DEFAULT}"
 
+MAVEN_COMMANDS_DEFAULT=""
+MAVEN_COMMANDS="${2:-$MAVEN_COMMANDS_DEFAULT}"
+
 echo "##############"
 echo "## MAVEN PACKAGE"
 echo "##############"
@@ -17,7 +20,7 @@ echo "# IP=${DB_IP}"
 echo "##############"
 echo "##############"
 echo "## RUN MAVEN PACKAGE"
-mvnw clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb
+mvnw clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS}
 echo "##############"
 echo "##############"
 echo "## STOP DB"
