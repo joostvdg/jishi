@@ -17,7 +17,7 @@ echo "# IP=${DB_IP}"
 echo "##############"
 echo "##############"
 echo "## RUN MAVEN PACKAGE"
-mvn clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb
+mvnw clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb
 echo "##############"
 echo "##############"
 echo "## STOP DB"
