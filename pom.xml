@@ -28,7 +28,6 @@
         <swagger.version>1.5.12</swagger.version>
         <springfox.version>2.6.1</springfox.version>
 
-        <flyway.baseline-on-migrate>true</flyway.baseline-on-migrate>
         <flyway.schemas>jishi</flyway.schemas>
         <db.url>jdbc:mysql://172.17.0.2/jishi</db.url>
         <db.user>jishi</db.user>
