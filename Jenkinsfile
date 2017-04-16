@@ -9,16 +9,18 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     stages {
-        stage('Setup Workspace') {
+        stage('Checkout') {
             steps {
                 deleteDir()
+                git 'https://github.com/joostvdg/jishi.git'
+
             }
         }
-        stage('Prepare') {
+        stage('Prepare Workspace') {
             steps {
                 parallel (
-                        SCM: {
-                            git 'https://github.com/joostvdg/jishi.git'
+                        NotifyAtomist: {
+                            notifyAtomist("UNSTABLE", "STARTED")
                         },
                         SettingsXml: {
                             writeFile encoding: 'UTF-8', file: 'settings.xml', text: '''<settings>
@@ -34,18 +36,13 @@ pipeline {
                         }
                 )
             }
-            post {
-                success {
-                    notifyAtomist("UNSTABLE", "STARTED")
-                }
-            }
         }
         stage('Build') {
             steps {
                 script {
                     def HOST= sh returnStdout: true, script: 'hostname'
                     sh 'chmod +x build.sh'
-                    sh "sh build.sh 0 \"-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\" 1 $HOST"
+                    sh "sh build.sh 1 \"-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\" 60 1 $HOST"
                 }
             }
         }

@@ -6,10 +6,13 @@ DOWN="${1:-$DOWN_DEFAULT}"
 MAVEN_COMMANDS_DEFAULT=""
 MAVEN_COMMANDS="${2:-$MAVEN_COMMANDS_DEFAULT}"
 
-DIND_WORKAROUND_DEFAULT=0
-DIND_WORKAROUND="${3:-DIND_WORKAROUND_DEFAULT}"
+WAIT_PERIOD_FOR_DB_DEFAULT=20
+WAIT_PERIOD_FOR_DB="${3:-WAIT_PERIOD_FOR_DB_DEFAULT}"
 
-DIND_HOST=$4
+DIND_WORKAROUND_DEFAULT=0
+DIND_WORKAROUND="${4:-DIND_WORKAROUND_DEFAULT}"
+
+DIND_HOST=$5
 
 echo "##############"
 echo "## MAVEN PACKAGE"
@@ -20,7 +23,7 @@ echo "## START DB"
 docker-compose up -d db
 #echo "## START VAULT"
 #docker-compose up -d vault-dev
-sleep 30
+sleep ${WAIT_PERIOD_FOR_DB}
 docker logs jishi_db_1
 echo "## CHECK DB IP"
 DB_IP=$(docker inspect --format '{{.NetworkSettings.Networks.jishi_default.IPAddress}}' jishi_db_1)
