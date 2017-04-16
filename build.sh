@@ -9,6 +9,8 @@ MAVEN_COMMANDS="${2:-$MAVEN_COMMANDS_DEFAULT}"
 DIND_WORKAROUND_DEFAULT=0
 DIND_WORKAROUND="${3:-DIND_WORKAROUND_DEFAULT}"
 
+DIND_HOST=$4
+
 echo "##############"
 echo "## MAVEN PACKAGE"
 echo "##############"
@@ -23,8 +25,7 @@ DB_IP=$(docker inspect --format '{{.NetworkSettings.Networks.jishi_default.IPAdd
 echo "# IP=${DB_IP}"
 if [ $DIND_WORKAROUND -gt 0 ]
 then
-    DOCKER_HOST=$(sh hostname)
-    docker network connect jishi_default $DOCKER_HOST
+    docker network connect jishi_default $DIND_HOST
 fi
 
 echo "##############"
@@ -35,8 +36,7 @@ echo "##############"
 echo "##############"
 if [ $DIND_WORKAROUND -gt 0 ]
 then
-    DOCKER_HOST=$(sh hostname)
-    docker network disconnect jishi_default $DOCKER_HOST
+    docker network disconnect jishi_default $DIND_HOST
 fi
 echo "## STOP DB"
 if [ $DOWN -gt 0 ]

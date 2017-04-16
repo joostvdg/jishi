@@ -42,8 +42,11 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'chmod +x build.sh'
-                sh 'sh build.sh 0 "-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true" 1'
+                script {
+                    def HOST= sh returnStdout: true, script: 'hostname'
+                    sh 'chmod +x build.sh'
+                    sh "sh build.sh 0 \"-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\" 1 $HOST"
+                }
             }
         }
         stage('Sonar') {
