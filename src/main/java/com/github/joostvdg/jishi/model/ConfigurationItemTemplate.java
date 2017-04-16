@@ -17,6 +17,9 @@ public class ConfigurationItemTemplate {
     @ManyToMany
     private Set<Label> labels;
 
+    @ManyToMany
+    private Set<TemplateAttribute> templateAttributes;
+
     @ManyToOne
     private ConfigurationItemTemplate parent;
     private String description;
@@ -74,5 +77,13 @@ public class ConfigurationItemTemplate {
 
     public void setType(ConfigurationItemType type) {
         this.type = type;
+    }
+
+    public void setTemplateAttributes(Set<TemplateAttribute> templateAttributes) {
+        this.templateAttributes = templateAttributes;
+    }
+
+    public Set<TemplateAttribute> getTemplateAttributes(){
+        return this.templateAttributes;
     }
 }
