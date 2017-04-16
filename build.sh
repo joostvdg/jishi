@@ -20,6 +20,8 @@ echo "## START DB"
 docker-compose up -d db
 #echo "## START VAULT"
 #docker-compose up -d vault-dev
+sleep 20
+docker logs jishi_db_1
 echo "## CHECK DB IP"
 DB_IP=$(docker inspect --format '{{.NetworkSettings.Networks.jishi_default.IPAddress}}' jishi_db_1)
 echo "# IP=${DB_IP}"
@@ -27,7 +29,6 @@ if [ $DIND_WORKAROUND -gt 0 ]
 then
     docker network connect jishi_default $DIND_HOST
 fi
-sleep 15
 echo "##############"
 echo "##############"
 echo "## RUN MAVEN PACKAGE"
