@@ -13,7 +13,7 @@ public class TemplateAttribute {
 
     @NotNull
     @Size(max = 64)
-    @Column(unique = true, length = 64, nullable = false)
+    @Column(name = "key_name", unique = true, length = 64, nullable = false)
     private String key;
 
     @NotNull
