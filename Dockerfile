@@ -1,7 +1,7 @@
 FROM anapsix/alpine-java:jdk8
 
 MAINTAINER Joost van der Griendt <joostvdg@gmail.com>
-LABEL authors="Joost van der Griendt <joostvdg@flusso.nl>"
+LABEL authors="Joost van der Griendt <joostvdg@gmail.com>"
 LABEL version="1.0.0"
 LABEL description="Simple application to model systems and applications"
 
