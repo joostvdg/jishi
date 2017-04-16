@@ -1,7 +1,7 @@
 spring:
   application:
       name: jishi
-  cloud:
-      vault:
-          token: 80e14235-5062-9406-7185-3401d72c7ea5
-          scheme: http
+#  cloud:
+#      vault:
+#          token: 80e14235-5062-9406-7185-3401d72c7ea5
+#          scheme: http
