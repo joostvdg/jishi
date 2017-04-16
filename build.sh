@@ -27,7 +27,7 @@ if [ $DIND_WORKAROUND -gt 0 ]
 then
     docker network connect jishi_default $DIND_HOST
 fi
-
+sleep 15
 echo "##############"
 echo "##############"
 echo "## RUN MAVEN PACKAGE"
