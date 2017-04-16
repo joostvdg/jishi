@@ -20,7 +20,7 @@ echo "## START DB"
 docker-compose up -d db
 #echo "## START VAULT"
 #docker-compose up -d vault-dev
-sleep 20
+sleep 30
 docker logs jishi_db_1
 echo "## CHECK DB IP"
 DB_IP=$(docker inspect --format '{{.NetworkSettings.Networks.jishi_default.IPAddress}}' jishi_db_1)
