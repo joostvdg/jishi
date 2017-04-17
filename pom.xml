@@ -29,7 +29,7 @@
         <springfox.version>2.6.1</springfox.version>
 
         <flyway.schemas>jishi</flyway.schemas>
-        <db.url>jdbc:mysql://172.17.0.2/jishi</db.url>
+        <db.url>jdbc:mysql://172.18.0.2/jishi</db.url>
         <db.user>jishi</db.user>
         <db.pass>5bZnNBnlo69xTirkGQjb</db.pass>
 	</properties>
