@@ -11,6 +11,8 @@ services:
       - MYSQL_DATABASE=jishi
       - MYSQL_USER=jishi
       - MYSQL_PASSWORD=5bZnNBnlo69xTirkGQjb
+    networks:
+      - jishi_net
 
   vault-dev:
     image: vault
@@ -24,3 +26,9 @@ services:
       - VAULT_ADDR=http://127.0.0.1:8200
     cap_add:
       - IPC_LOCK
+    networks:
+      - jishi_net
+
+networks:
+  jishi_net:
+    driver: bridge

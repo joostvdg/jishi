@@ -6,7 +6,7 @@ DOWN="${1:-$DOWN_DEFAULT}"
 MAVEN_COMMANDS_DEFAULT=""
 MAVEN_COMMANDS="${2:-$MAVEN_COMMANDS_DEFAULT}"
 
-WAIT_PERIOD_FOR_DB_DEFAULT=20
+WAIT_PERIOD_FOR_DB_DEFAULT=30
 WAIT_PERIOD_FOR_DB="${3:-WAIT_PERIOD_FOR_DB_DEFAULT}"
 
 DIND_WORKAROUND_DEFAULT=0
@@ -23,23 +23,28 @@ echo "## START DB"
 docker-compose up -d db
 #echo "## START VAULT"
 #docker-compose up -d vault-dev
+echo "## Sleeping ${WAIT_PERIOD_FOR_DB} seconds for DB to come up"
 sleep ${WAIT_PERIOD_FOR_DB}
 docker logs jishi_db_1
 echo "## CHECK DB IP"
 DB_IP=$(docker inspect --format '{{.NetworkSettings.Networks.jishi_default.IPAddress}}' jishi_db_1)
+#DB_IP=jishi_db_1
 echo "# IP=${DB_IP}"
 if [ $DIND_WORKAROUND -gt 0 ]
 then
+    echo "## Connecting DIND host to network"
     docker network connect jishi_default $DIND_HOST
 fi
 echo "##############"
 echo "##############"
 echo "## RUN MAVEN PACKAGE"
-sh mvnw clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS}
+## --network=container:jishi_db_1
+docker run -it --rm --name jish-maven-build --net=jishi_jishi_net -v /tmp/repository:/tmp/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven mvn clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS} -Dmaven.repo.local=/tmp/repository
 echo "##############"
 echo "##############"
 if [ $DIND_WORKAROUND -gt 0 ]
 then
+    echo "## Disconnecting DIND host to network"
     docker network disconnect jishi_default $DIND_HOST
 fi
 echo "## STOP DB"
