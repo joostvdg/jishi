@@ -14,9 +14,13 @@ DIND_WORKAROUND="${4:-DIND_WORKAROUND_DEFAULT}"
 
 DIND_HOST=$5
 
+WORKSPACE_FOLDER_DEFAULT="$PWD"
+WORKSPACE_FOLDER="${6:-WORKSPACE_FOLDER_DEFAULT}"
+
 echo "##############"
 echo "## MAVEN PACKAGE"
 echo "##############"
+echo "## WORKSPACE_FOLDER=$WORKSPACE_FOLDER"
 echo "## PREPARE DOCKER ENV"
 docker-compose pull
 echo "## START DB"
@@ -39,7 +43,8 @@ echo "##############"
 echo "##############"
 echo "## RUN MAVEN PACKAGE"
 ## --network=container:jishi_db_1
-docker run -i --rm --name jish-maven-build --net=jishi_jishi_net -v /tmp/repository:/tmp/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven mvn clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS} -Dmaven.repo.local=/tmp/repository
+echo
+docker run -i --rm --name jish-maven-build --net=jishi_jishi_net -v /tmp/repository:/tmp/repository -v "$WORKSPACE_FOLDER":/usr/src/mymaven -w /usr/src/mymaven maven mvn clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS} -Dmaven.repo.local=/tmp/repository
 echo "##############"
 echo "##############"
 if [ $DIND_WORKAROUND -gt 0 ]
