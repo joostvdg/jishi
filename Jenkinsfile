@@ -40,9 +40,13 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def HOST= sh returnStdout: true, script: 'hostname'
+                    def HOSTRAW= sh returnStdout: true, script: 'hostname'
+                    def HOST = HOSTRAW.trim()
                     sh 'chmod +x build.sh'
-                    sh "sh build.sh 1 \"-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\" 60 1 $HOST"
+                    def pwd = pwd()
+                    def workspace = pwd.replace("/workspace/", "/tmp/")
+                    sh "sh build.sh 1 \"-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\" 60 1 $HOST $workspace"
+                    //sh "docker run -i --rm --name jish-maven-build -v /tmp/repository:/tmp/repository -v $workspace:/usr/src/mymaven -w /usr/src/mymaven maven ls -lath"
                 }
             }
         }
@@ -81,20 +85,28 @@ pipeline {
         }
     }
     post {
-        always {
-            step([$class: 'WsCleanup', notFailBuild: true])
-        }
         success {
-            notifyAtomist("SUCCESS")
-        }
-        failure {
-            notifyAtomist("FAILURE")
+            echo "SUCCESS"
         }
         unstable {
-            notifyAtomist("UNSTABLE")
+            echo "UNSTABLE"
+        }
+        failure {
+            echo "FAILURE"
         }
         changed {
             echo "Status Changed: [From: $currentBuild.previousBuild.result, To: $currentBuild.result]"
+        }
+        always {
+            script {
+                def result = currentBuild.result
+                if (result == null) {
+                    result = "SUCCESS"
+                }
+                notifyAtomist(result)
+            }
+            echo "ALWAYS"
+            step([$class: 'WsCleanup', notFailBuild: true])
         }
     }
 }
