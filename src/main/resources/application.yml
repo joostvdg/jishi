@@ -4,13 +4,18 @@ spring:
       indent_output: true
       write_dates_as_timestamps: false
   jpa:
+      show-sql: true
+      format-sql: true
       database: MYSQL
       hibernate:
           ddl-auto: validate
           naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
           dialect: org.hibernate.dialect.MySQL5Dialect
+  data:
+    rest:
+      base-path: /api
   datasource:
-      url: jdbc:mysql://172.17.0.2/jishi
+      url: jdbc:mysql://172.18.0.2/jishi
       username: jishi
       password: 5bZnNBnlo69xTirkGQjb
       driver-class-name: com.mysql.jdbc.Driver
