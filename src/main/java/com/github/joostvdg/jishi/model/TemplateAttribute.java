@@ -1,5 +1,7 @@
 package com.github.joostvdg.jishi.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +28,11 @@ public class TemplateAttribute {
     @Size(max = 64)
     @Column(nullable = false, length = 64)
     private String valueType;
+
+    @NotNull
+    @Column(nullable = false, columnDefinition = "TINYINT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean required;
 
     TemplateAttribute(){}
 
@@ -67,5 +74,13 @@ public class TemplateAttribute {
 
     public void setValueType(String valueType) {
         this.valueType = valueType;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 }
