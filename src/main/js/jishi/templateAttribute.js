@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Table from 'react-bootstrap/lib/Table';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 const client = require('../client');
 
 export class TemplateAttribute extends React.Component {
@@ -17,6 +18,7 @@ export class TemplateAttribute extends React.Component {
                 <td>{this.props.templateAttribute.value}</td>
                 <td>{this.props.templateAttribute.description}</td>
                 <td>{this.props.templateAttribute.valueType}</td>
+                <td><Glyphicon glyph={this.props.templateAttribute.required ? 'ok' : 'minus'}/></td>
             </tr>
         );
     }
@@ -40,6 +42,7 @@ export class TemplateAttributeList extends React.Component {
                         <th>value</th>
                         <th>description</th>
                         <th>valueType</th>
+                        <th>required</th>
                     </tr>
                 </thead>
                 <tbody>
