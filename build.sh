@@ -61,3 +61,5 @@ else
     docker-compose stop
 fi
 echo "##############"
+
+docker run -i --rm --name jish-maven-build --net=jishi_jishi_net -v /tmp/repository:/tmp/repository -v /home/joost/Projects/github/jishi:/usr/src/mymaven -w /usr/src/mymaven maven ls -lath
