@@ -25,7 +25,7 @@ const client = require('./client');
 
 import {ShowTemplateAttribute} from './jishi/templateAttribute.js';
 import {ShowLabels} from './jishi/labels.js';
-import {ShowTemplate} from './jishi/templates';
+import {ShowTemplate, ShowTemplateDropdown} from './jishi/templates';
 
 class Navigation extends React.Component {
 
@@ -44,6 +44,7 @@ class Navigation extends React.Component {
                         <LinkContainer to="/view/labels"><NavItem eventKey={3}>Labels</NavItem></LinkContainer>
                         <LinkContainer to="/view/templateAttributes"><NavItem eventKey={4}>Template Attributes</NavItem></LinkContainer>
                         <LinkContainer to="/view/templates"><NavItem eventKey={5}>Templates</NavItem></LinkContainer>
+                        <LinkContainer to="/view/newInstance"><NavItem eventKey={6}>New Instance</NavItem></LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -67,6 +68,7 @@ function MainPage(props) {
                     <Route path="/view/labels" component={ShowLabels}/>
                     <Route path="/view/templateAttributes" component={ShowTemplateAttribute}/>
                     <Route path="/view/templates" component={ShowTemplate}/>
+                    <Route path="/view/newInstance" component={ShowTemplateDropdown} />
                 </div>
             </Router>
         </Grid>
