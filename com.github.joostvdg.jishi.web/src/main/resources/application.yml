@@ -5,17 +5,21 @@ spring:
       write_dates_as_timestamps: false
   jpa:
       show-sql: true
-      format-sql: true
-      database: MYSQL
+      database: mysql
       hibernate:
           ddl-auto: validate
-          naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-          dialect: org.hibernate.dialect.MySQL5Dialect
+          use-new-id-generator-mappings: false
   data:
     rest:
       base-path: /api
   datasource:
-      url: jdbc:mysql://172.18.0.2/jishi
-      username: jishi
-      password: 5bZnNBnlo69xTirkGQjb
+      url: @db.url@
+      username: @db.user@
+      password: @db.pass@
       driver-class-name: com.mysql.jdbc.Driver
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api

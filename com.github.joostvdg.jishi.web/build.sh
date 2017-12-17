@@ -45,7 +45,8 @@ echo "##############"
 echo "## RUN MAVEN PACKAGE"
 ## --network=container:jishi_db_1
 echo
-docker run -i --rm --name jish-maven-build --net=jishi_jishi_net -v /tmp/repository:/tmp/repository -v "$WORKSPACE_FOLDER":/usr/src/mymaven -w /usr/src/mymaven maven mvn clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS} -Dmaven.repo.local=/tmp/repository
+docker run -i --rm --name jish-maven-build-check maven:3-jdk-9 mvn -v
+docker run -i --rm --name jish-maven-build --net=jishi_jishi_net -v /tmp/repository:/tmp/repository -v "$WORKSPACE_FOLDER":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-9 mvn clean package -Ddb.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.url=jdbc:mysql://${DB_IP}:3306/jishi -Dspring.datasource.username=jishi -Dspring.datasource.password=5bZnNBnlo69xTirkGQjb ${MAVEN_COMMANDS} -Dmaven.repo.local=/tmp/repository
 echo "##############"
 echo "##############"
 if [ $DIND_WORKAROUND -gt 0 ]

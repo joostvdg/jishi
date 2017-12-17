@@ -1,7 +1,6 @@
 package com.github.joostvdg.jishi.repository;
 
 import com.github.joostvdg.jishi.model.ConfigurationItemInstance;
-import com.github.joostvdg.jishi.model.ConfigurationItemTemplate;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

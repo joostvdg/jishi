@@ -1,0 +1,72 @@
+#!groovy
+@Library(['github.com/joostvdg/jenkins-pipeline-lib']) _
+
+pipeline {
+    agent { label 'docker' }
+    options {
+        timeout(time: 60, unit: 'MINUTES')
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                deleteDir()
+                git 'https://github.com/joostvdg/jishi.git'
+
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    def HOSTRAW= sh returnStdout: true, script: 'hostname'
+                    def HOST = HOSTRAW.trim()
+                    sh 'chmod +x build.sh'
+                    def pwd = pwd()
+                    def workspace = pwd.replace("/workspace/", "/tmp/")
+                    sh "sh build.sh 1 \"-s settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\" 60 1 $HOST $workspace"
+                    //sh "docker run -i --rm --name jish-maven-build -v /tmp/repository:/tmp/repository -v $workspace:/usr/src/mymaven -w /usr/src/mymaven maven ls -lath"
+                }
+            }
+        }
+        stage('Sonar') {
+            steps {
+                withSonarQubeEnv('DroveSonarQube') {
+                    sh 'sh mvnw sonar:sonar'
+                }
+            }
+        }
+        stage('Prepare Docker Image'){
+            steps {
+                script {
+                    def lintResult = sh returnStdout: true, script: 'docker run --rm -i lukasmartinelli/hadolint < Dockerfile'
+                    if (lintResult.trim() == '') {
+                        println 'Lint finished with no errors'
+                    } else {
+                        println 'Error found in Lint'
+                        println "${lintResult}"
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo "SUCCESS"
+        }
+        unstable {
+            echo "UNSTABLE"
+        }
+        failure {
+            echo "FAILURE"
+        }
+        changed {
+            echo "Status Changed: [From: $currentBuild.previousBuild.result, To: $currentBuild.result]"
+        }
+        always {
+            echo "ALWAYS"
+            step([$class: 'WsCleanup', notFailBuild: true])
+        }
+    }
+}

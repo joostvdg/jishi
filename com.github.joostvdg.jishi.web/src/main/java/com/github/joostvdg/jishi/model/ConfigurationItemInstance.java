@@ -3,7 +3,7 @@ package com.github.joostvdg.jishi.model;
 import com.github.joostvdg.jishi.model.extend.ConfigurationItemType;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class ConfigurationItemInstance {
@@ -15,8 +15,11 @@ public class ConfigurationItemInstance {
     private String name;
     private String description;
 
-    private LocalDate dateCreated;
-    private LocalDate dateModified;
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime created;
+
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime lastModified;
 
     @ManyToOne
     private ConfigurationItemTemplate template;
@@ -51,20 +54,20 @@ public class ConfigurationItemInstance {
         this.description = description;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
-    public LocalDate getDateModified() {
-        return dateModified;
+    public LocalDateTime getLastModified() {
+        return lastModified;
     }
 
-    public void setDateModified(LocalDate dateModified) {
-        this.dateModified = dateModified;
+    public void setLastModified(LocalDateTime lastModified) {
+        this.lastModified = lastModified;
     }
 
     public ConfigurationItemTemplate getTemplate() {

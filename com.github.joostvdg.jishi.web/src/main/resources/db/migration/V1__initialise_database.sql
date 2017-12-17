@@ -28,8 +28,8 @@ CREATE TABLE `configuration_item_template_labels` (
 
 CREATE TABLE `configuration_item_instance` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `date_created` tinyblob,
-  `date_modified` tinyblob,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `last_modified` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
